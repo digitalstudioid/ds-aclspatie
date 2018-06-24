@@ -11,6 +11,30 @@
 |
 */
 
+//REFEREMSI --> https://itsolutionstuff.com/post/laravel-56-user-roles-and-permissions-acl-using-spatie-tutorialexample.html
+
+/*
+composer require laravel/passport
+php artisan migrate
+php artisan passport:install
+
+https://github.com/laravel/passport/issues/539
+
+Install LaravelCollective
+https://laravelcollective.com/docs/master/html
+
+*/
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles','RoleController');
+    Route::resource('users','UserController');
+    Route::resource('products','ProductController');
 });
